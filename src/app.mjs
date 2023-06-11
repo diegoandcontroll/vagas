@@ -36,14 +36,23 @@
 //   console.log('Express server listening on port ' + port);
 // });
 
+import bodyParser from 'body-parser';
 import express from 'express';
+import { dirname } from 'node:path';
 import userRoutes from './routes/UserRoutes.mjs';
-
+app.use(express.static(dirname + '/public'));
 const app = express();
 
 app.use(express.json());
 
 app.use(userRoutes);
+app.set('view engine', 'jade');
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.listen(3000, () => {
   console.log('Servidor iniciado na porta 3000');
